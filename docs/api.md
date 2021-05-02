@@ -24,11 +24,13 @@ content-length: <len>
 {
   "destinations": [
     {
+      "rank": 1,
       "name": "London",
       "weather": "Sunny",
       "covid19": "+2849"
     },
     {
+      "rank": 2,
       "name": "Glasgow",
       "weather": "Cloudy",
       "covid19": "+439"
