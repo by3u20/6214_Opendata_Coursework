@@ -48,11 +48,8 @@ const gen = {
         <h1>{{ titleText }}</h1>
       </div>
       <div class="col-12 col-lg-6 m-4 p-4 bg-white text-center rounded shadow">
-        <img :src="img.src" :style="img.styles">
+        <img :src="img.src" :style="img.styles" @load="getPlan()">
       </div>
-    </div>
-    <div class="text-end">
-      <button class="btn btn-primary" @click="getPlan()">Action (Debug)</button>
     </div>
   </div>`
 }
