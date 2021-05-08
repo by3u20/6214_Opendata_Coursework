@@ -18,7 +18,10 @@ public class Controller {
   ) {
     // TODO: CRUD
     Plan result = new Plan();
-    result.addDestination(new Destination(1, "Example Destination", "Sunny", "+0"));
+    result.addDestination(new Destination(1, "Example Destination 1", "+0", "Sunny", "Traval", "Shopping"));
+    result.addDestination(new Destination(4, "Example Destination 2", "+0", "Sunny", "Traval", "Shopping"));
+    result.addDestination(new Destination(2, "Example Destination 3", "+0", "Sunny", "Traval", "Shopping"));
+    result.addDestination(new Destination(3, "Example Destination 4", "+0", "Sunny", "Traval", "Shopping"));
     return result;
   }
 
