@@ -6,6 +6,7 @@ const gen = {
         src: "img/gen_people_waiting.png",
         styles: {
           "max-height": "40vh",
+          "max-width": "100%",
         }
       },
     }
