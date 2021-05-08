@@ -9,8 +9,12 @@ public class Controller {
 
   @GetMapping("/api/plan")
   public Plan plan(
-    @RequestParam(value = "from") String from,
-    @RequestParam(value = "to") String to
+    @RequestParam(name = "COVID-19", required = false) Integer covid19,
+    @RequestParam(name = "Weather", required = false) Integer weather,
+    @RequestParam(name = "Travel", required = false) Integer travel,
+    @RequestParam(name = "Shopping", required = false) Integer shopping,
+    @RequestParam String from,
+    @RequestParam String to
   ) {
     // TODO: CRUD
     Plan result = new Plan();
