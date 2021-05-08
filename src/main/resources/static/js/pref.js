@@ -14,9 +14,34 @@ const pref = {
   },
   computed: {
     getAvailPrefs() {
+      // No time left, hardcode
       if (!this.prefs)
-        this.prefs = ["Foo", "Bar", "Baz"]
+        this.prefs = ["COVID-19", "Weather", "Travel", "Shopping"]
+
       return this.prefs
+    }
+  },
+  methods: {
+    routeToGen() {
+      let options = []
+
+      // Selections
+      this.prefs.forEach((pref) => {
+        if (document.getElementById(pref).checked) {
+          options.push({name: pref, val: 1})
+        }
+      })
+
+      // Dates
+      options.push({name: "from", val: document.getElementById("date-from").value})
+      options.push({name: "to", val: document.getElementById("date-to").value})
+
+      this.$router.push({
+        name: "gen",
+        params: {
+          options: JSON.stringify(options)
+        }
+      })
     }
   },
   template: `
@@ -63,6 +88,6 @@ const pref = {
       </div>
     </div>
     <div class="text-end mt-3">
-      <router-link to="/gen" class="btn btn-primary shadow">{{ btnNextText }}</router-link>
+      <button role="button" class="btn btn-primary shadow" @click="routeToGen">{{ btnNextText }}</button>
     </div>`
 }

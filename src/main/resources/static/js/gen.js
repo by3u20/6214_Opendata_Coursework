@@ -11,6 +11,36 @@ const gen = {
       },
     }
   },
+  props: ["options"],
+  methods: {
+    getPlan() {
+      const options = JSON.parse(this.options)
+      let url = "/api/plan?"
+
+      options.forEach((opt) => {
+        url += opt.name + "=" + opt.val + "&"
+      })
+
+      // Remove trailing `&`
+      url = url.slice(0, -1)
+
+      fetch(url, {
+        method: "GET",
+        headers: {
+          "Accept": "application/json",
+        },
+      }).then((resp) => resp.json())
+        .then((data) => {
+          this.$router.push({
+            name: "destlist",
+            params: {
+              dests: JSON.stringify(data.destinations),
+            },
+          })
+        })
+        .catch(console.error)
+    }
+  },
   template: `
   <div>
     <div class="row justify-content-center">
@@ -22,7 +52,7 @@ const gen = {
       </div>
     </div>
     <div class="text-end">
-      <router-link to="/destlist">Next (Debug)</router-link>
+      <button class="btn btn-primary" @click="getPlan()">Action (Debug)</button>
     </div>
   </div>`
 }
