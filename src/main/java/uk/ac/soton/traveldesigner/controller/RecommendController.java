@@ -114,7 +114,7 @@ public class RecommendController {
             String cityNameWeather = getCities().get(i).getWeatherCityName();
             String cityName = getCities().get(i).getCityName();
             LocalDate dateNow = LocalDate.now();
-            Period period = Period.between(date,dateNow);
+            Period period = Period.between(dateNow, date);
             Integer timerange = period.getDays();
             Map map = weatherService.getWeatherByCityName(cityNameWeather);
             if (map == null) continue;
