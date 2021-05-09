@@ -27,6 +27,7 @@ create table travel_city
    university_name       varchar(100),
    university_score      double,
    gdp20181  double,
+   Shopping_Score double,
    primary key (city_id)
 );
 

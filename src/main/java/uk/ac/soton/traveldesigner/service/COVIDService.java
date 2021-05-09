@@ -36,8 +36,11 @@ public class COVIDService {
         structure.put("cumulativeCases", "cumCasesByPublishDate");
         structure.put("dailyDeaths", "newDeaths28DaysByPublishDate");
         structure.put("cumulativeDeaths", "cumDeaths28DaysByPublishDate");
-
-        String reqUrl = entryPointUrl +"?filters=areaType=ltla;areaName="+ cityName +"&structure={structure}";
+        String reqUrl;
+        if (cityName == "London")
+            reqUrl = entryPointUrl +"?filters=areaType=regions;areaName="+ cityName +"&structure={structure}";
+        else
+            reqUrl = entryPointUrl +"?filters=areaType=ltla;areaName="+ cityName +"&structure={structure}";
 
         Map forObject = restTemplate.getForObject(reqUrl, Map.class, JSON.toJSONString(structure));
         return forObject;

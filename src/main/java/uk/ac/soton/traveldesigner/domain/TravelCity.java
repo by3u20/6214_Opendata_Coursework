@@ -21,6 +21,7 @@ public class TravelCity {
     private String gdpNamePS;
     private String gdpCityName;
     private String gdp2018;
+    private Double Shopping_Score;
 
     private Integer holidayVisit;
     private Integer travelVisit;
