@@ -59,8 +59,9 @@ public class RecommendController {
         Map<String, Double> covidHash = new HashMap<>();
 
         for (int i = 0; i < getCities().size(); i++) {
-            String cityName = getCities().get(i).getCOVIDGovLTLACityName();
-            Map map = covidService.getCOVIDByCityName(cityName);
+            String cityNameCovid = getCities().get(i).getCOVIDGovLTLACityName();
+            String cityName = getCities().get(i).getCityName();
+            Map map = covidService.getCOVIDByCityName(cityNameCovid);
             if (map == null) continue;
             Integer dailyCases = (Integer) ((Map) (((List) map.get("data")).get(0))).get("dailyCases");
             Double covidScores ;
@@ -110,11 +111,12 @@ public class RecommendController {
     public Map<String, Double> getWeatherScore(LocalDate date) {
         Map<String, Double> weatherHash = new HashMap<>();
         for (int i = 0; i < getCities().size(); i++) {
-            String cityName = getCities().get(i).getWeatherCityName();
+            String cityNameWeather = getCities().get(i).getWeatherCityName();
+            String cityName = getCities().get(i).getCityName();
             LocalDate dateNow = LocalDate.now();
             Period period = Period.between(date,dateNow);
             Integer timerange = period.getDays();
-            Map map = weatherService.getWeatherByCityName(cityName);
+            Map map = weatherService.getWeatherByCityName(cityNameWeather);
             if (map == null) continue;
             String dailyCases = (String) ((Map)((List)((Map)((List) map.get("list")).get(timerange)).get("weather")).get(0)).get("description");
             Integer weatherScores ;

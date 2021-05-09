@@ -1,6 +1,7 @@
 package uk.ac.soton.traveldesigner.api;
 
 import io.swagger.models.auth.In;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -8,6 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 import uk.ac.soton.traveldesigner.controller.COVIDController;
 import uk.ac.soton.traveldesigner.controller.RecommendController;
 import uk.ac.soton.traveldesigner.controller.WeatherController;
+import uk.ac.soton.traveldesigner.domain.TravelCity;
+import uk.ac.soton.traveldesigner.service.TravelCityService;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -17,6 +20,18 @@ import java.text.*;
 
 @RestController
 public class Controller {
+
+
+  @Autowired
+  private TravelCityService travelCityService;
+
+  private List<TravelCity> cities = null;
+
+  public List<TravelCity> getCities() {
+    if (this.cities == null)
+      this.cities = travelCityService.getAllTravelCity();
+    return this.cities;
+  }
 
   @GetMapping("/api/plan")
   public Plan plan(
@@ -29,7 +44,6 @@ public class Controller {
   ) {
     // TODO: CRUD
     Plan result = new Plan();
-    String cityName = "Southampton";
 
     RecommendController recommendController = new RecommendController();
     Map<String, Double> covidScore = recommendController.getCovidScore();
@@ -56,10 +70,20 @@ public class Controller {
       shoppingScore.forEach((key,value) -> finalScore.merge(key,value,Double::sum));
     }
 
-    result.addDestination(new Destination(1, "Example Destination 1", "+0", "Sunny", "Traval", "Shopping"));
-    result.addDestination(new Destination(4, "Example Destination 2", "+0", "Sunny", "Traval", "Shopping"));
-    result.addDestination(new Destination(2, "Example Destination 3", "+0", "Sunny", "Traval", "Shopping"));
-    result.addDestination(new Destination(3, "Example Destination 4", "+0", "Sunny", "Traval", "Shopping"));
+
+    List<Map.Entry<String, Double>> list = new ArrayList<Map.Entry<String, Double>>(finalScore.entrySet());
+    Collections.sort(list, new Comparator<Map.Entry<String, Double>>() {
+      @Override
+      public int compare(Map.Entry<String, Double> o1, Map.Entry<String, Double> o2) {
+        return o2.getValue().compareTo(o1.getValue());
+      }
+    });
+
+
+    for (int i = 0; i < 5; i++) {
+      result.addDestination(new Destination(i+1, list.get(i).getKey(), "+0", "Sunny", "Traval", "Shopping"));
+    }
+
     return result;
   }
 
