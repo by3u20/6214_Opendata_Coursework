@@ -16,7 +16,12 @@ const pref = {
     getAvailPrefs() {
       // No time left, hardcode
       if (!this.prefs)
-        this.prefs = ["COVID-19", "Weather", "Travel", "Shopping"]
+        this.prefs = [
+          {name: "Weather", required: true},
+          {name: "COVID-19", required: false},
+          {name: "Travel", required: false},
+          {name: "Shopping", required: false},
+        ]
 
       return this.prefs
     }
@@ -26,9 +31,9 @@ const pref = {
       let options = []
 
       // Selections
-      this.prefs.forEach((pref) => {
-        if (document.getElementById(pref).checked) {
-          options.push({name: pref, val: 1})
+      this.getAvailPrefs.forEach((pref) => {
+        if (document.getElementById(pref.name).checked) {
+          options.push({name: pref.name, val: 1})
         }
       })
 
@@ -58,8 +63,8 @@ const pref = {
             <div class="card-body">
               <h5 class="card-title">Options</h5>
               <div v-for="pref in getAvailPrefs" class="m-3">
-                <input type="checkbox" class="btn-check" :id="pref" autocomplete="off">
-                <label class="btn btn-outline-primary w-100" :for="pref">{{ pref }}</label>
+                <input type="checkbox" class="btn-check" :id="pref.name" :required="pref.required" autocomplete="off">
+                <label class="btn btn-outline-primary w-100" :for="pref.name">{{ pref.name }}</label>
               </div>
             </div>
           </div>
