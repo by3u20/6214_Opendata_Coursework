@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import uk.ac.soton.traveldesigner.controller.COVIDController;
 import uk.ac.soton.traveldesigner.controller.RecommendController;
 import uk.ac.soton.traveldesigner.controller.WeatherController;
@@ -13,25 +14,15 @@ import uk.ac.soton.traveldesigner.domain.TravelCity;
 import uk.ac.soton.traveldesigner.service.TravelCityService;
 
 import java.time.LocalDate;
-import java.util.Date;
-import  java.util.*;
+import java.util.*;
 import java.text.*;
 
 
 @RestController
 public class Controller {
 
-
   @Autowired
-  private TravelCityService travelCityService;
-
-  private List<TravelCity> cities = null;
-
-  public List<TravelCity> getCities() {
-    if (this.cities == null)
-      this.cities = travelCityService.getAllTravelCity();
-    return this.cities;
-  }
+  private AutowireCapableBeanFactory beanFactory;
 
   @GetMapping("/api/plan")
   public Plan plan(
@@ -45,7 +36,9 @@ public class Controller {
     // TODO: CRUD
     Plan result = new Plan();
 
-    RecommendController recommendController = new RecommendController();
+    // RecommendController recommendController = new RecommendController();
+    // NOTE: Tell Spring to reflect all stuff
+    RecommendController recommendController = this.beanFactory.createBean(RecommendController.class);
     Map<String, Double> covidScore = recommendController.getCovidScore();
     Map<String, Double> weatherScore = recommendController.getWeatherScore(from);
     Map<String, Double> travelScore = recommendController.getTravelScore();
