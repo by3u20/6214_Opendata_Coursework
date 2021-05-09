@@ -1,5 +1,6 @@
 package uk.ac.soton.traveldesigner.api;
 
+import io.swagger.models.auth.In;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,10 +20,10 @@ public class Controller {
 
   @GetMapping("/api/plan")
   public Plan plan(
-    @RequestParam(name = "COVID-19", required = false) Integer covid19,
-    @RequestParam(name = "Weather", required = false) Integer weather,
-    @RequestParam(name = "Travel", required = false) Integer travel,
-    @RequestParam(name = "Shopping", required = false) Integer shopping,
+    @RequestParam(name = "COVID-19", required = false) Integer choiceCovid19,
+    @RequestParam(name = "Weather", required = false) Integer choiceWeather,
+    @RequestParam(name = "Travel", required = false) Integer choiceTravel,
+    @RequestParam(name = "Shopping", required = false) Integer choiceShopping,
     @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
     @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to
   ) {
@@ -31,12 +32,29 @@ public class Controller {
     String cityName = "Southampton";
 
     RecommendController recommendController = new RecommendController();
-    Map<String, Integer> covidScore = recommendController.getCovidScore();
-    Map<String, Integer> weatherScore = recommendController.getWeatherScore(from);
+    Map<String, Double> covidScore = recommendController.getCovidScore();
+    Map<String, Double> weatherScore = recommendController.getWeatherScore(from);
     Map<String, Double> travelScore = recommendController.getTravelScore();
     Map<String, Double> shoppingScore = recommendController.getShoppingScore();
+    Map<String, Double> finalScore = weatherScore;
 
-    Map<String, Integer> finalScore;
+    if (choiceCovid19==null){
+    }
+    else{
+      covidScore.forEach((key,value) -> finalScore.merge(key,value,Double::sum));
+    }
+
+    if (choiceTravel==null){
+    }
+    else{
+      travelScore.forEach((key,value) -> finalScore.merge(key,value,Double::sum));
+    }
+
+    if (choiceShopping==null){
+    }
+    else{
+      shoppingScore.forEach((key,value) -> finalScore.merge(key,value,Double::sum));
+    }
 
     result.addDestination(new Destination(1, "Example Destination 1", "+0", "Sunny", "Traval", "Shopping"));
     result.addDestination(new Destination(4, "Example Destination 2", "+0", "Sunny", "Traval", "Shopping"));

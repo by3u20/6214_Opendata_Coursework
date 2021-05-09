@@ -55,60 +55,60 @@ public class RecommendController {
         return cityShoppingScore;
     }
 
-    public Map<String, Integer> getCovidScore() {
-        Map<String, Integer> covidHash = new HashMap<>();
+    public Map<String, Double> getCovidScore() {
+        Map<String, Double> covidHash = new HashMap<>();
 
         for (int i = 0; i < getCities().size(); i++) {
             String cityName = getCities().get(i).getCOVIDGovLTLACityName();
             Map map = covidService.getCOVIDByCityName(cityName);
             if (map == null) continue;
             Integer dailyCases = (Integer) ((Map) (((List) map.get("data")).get(0))).get("dailyCases");
-            Integer covidScores ;
+            Double covidScores ;
             if(dailyCases==0){
-                covidScores=10;
+                covidScores=10.0;
                 covidHash.put(cityName, covidScores);
             }else
             if(dailyCases<4){
-                covidScores=9;
+                covidScores=9.0;
                 covidHash.put(cityName, covidScores);
             }else
             if(dailyCases<11){
-                covidScores=8;
+                covidScores=8.0;
                 covidHash.put(cityName, covidScores);
             }else
             if(dailyCases<21){
-                covidScores=7;
+                covidScores=7.0;
                 covidHash.put(cityName, covidScores);
             }else
             if(dailyCases<31){
-                covidScores=6;
+                covidScores=6.0;
                 covidHash.put(cityName, covidScores);
             }else
             if(dailyCases<41){
-                covidScores=5;
+                covidScores=5.0;
                 covidHash.put(cityName, covidScores);
             }else
             if(dailyCases<51){
-                covidScores=4;
+                covidScores=4.0;
                 covidHash.put(cityName, covidScores);
             }else
             if(dailyCases<71){
-                covidScores=3;
+                covidScores=3.0;
                 covidHash.put(cityName, covidScores);
             }else
             if(dailyCases<101){
-                covidScores=2;
+                covidScores=2.0;
                 covidHash.put(cityName, covidScores);
             }else
-                covidScores=1;
+                covidScores=1.0;
                 covidHash.put(cityName, covidScores);
         }
 
         return covidHash;
     }
 
-    public Map<String, Integer> getWeatherScore(LocalDate date) {
-        Map<String, Integer> weatherHash = new HashMap<>();
+    public Map<String, Double> getWeatherScore(LocalDate date) {
+        Map<String, Double> weatherHash = new HashMap<>();
         for (int i = 0; i < getCities().size(); i++) {
             String cityName = getCities().get(i).getWeatherCityName();
             LocalDate dateNow = LocalDate.now();
@@ -120,31 +120,31 @@ public class RecommendController {
             Integer weatherScores ;
             switch (dailyCases){
                 case "clear sky":
-                    weatherHash.put(cityName,10);
+                    weatherHash.put(cityName,10.0);
                     break;
                 case "few clouds":
-                    weatherHash.put(cityName,9);
+                    weatherHash.put(cityName,9.0);
                     break;
                 case "scattered clouds":
-                    weatherHash.put(cityName,7);
+                    weatherHash.put(cityName,7.0);
                     break;
                 case "broken clouds":
-                    weatherHash.put(cityName,5);
+                    weatherHash.put(cityName,5.0);
                     break;
                 case "shower rain":
-                    weatherHash.put(cityName,4);
+                    weatherHash.put(cityName,4.0);
                     break;
                 case "rain":
-                    weatherHash.put(cityName,2);
+                    weatherHash.put(cityName,2.0);
                     break;
                 case "thunderstorm":
-                    weatherHash.put(cityName,1);
+                    weatherHash.put(cityName,1.0);
                     break;
                 case "snow":
-                    weatherHash.put(cityName,3);
+                    weatherHash.put(cityName,3.0);
                     break;
                 case "mist":
-                    weatherHash.put(cityName,2);
+                    weatherHash.put(cityName,2.0);
                     break;
                 default:
                     break;
