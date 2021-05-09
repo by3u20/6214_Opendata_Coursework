@@ -14,10 +14,10 @@ import java.time.LocalDateTime;
 public class WeatherController {
 
     @Autowired
-    private static WeatherService weatherService;
+    private WeatherService weatherService;
 
     @GetMapping("/{cityName}")
-    public static Object getWeatherByCityName(@PathVariable("cityName") String cityName, @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
+    public Object getWeatherByCityName(@PathVariable("cityName") String cityName, @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
         return weatherService.getWeatherByCityName(cityName);
     }
 

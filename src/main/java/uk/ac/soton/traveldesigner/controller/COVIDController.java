@@ -12,10 +12,10 @@ import uk.ac.soton.traveldesigner.service.COVIDService;
 public class COVIDController {
 
     @Autowired
-    private static COVIDService covidService;
+    private COVIDService covidService;
 
     @GetMapping("/{cityName}")
-    public static Object getCOVIDByCityName(@PathVariable("cityName") String cityName) {
+    public Object getCOVIDByCityName(@PathVariable("cityName") String cityName) {
         return covidService.getCOVIDByCityName(cityName);
     }
 }
