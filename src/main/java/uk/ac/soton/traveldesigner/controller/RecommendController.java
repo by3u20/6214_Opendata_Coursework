@@ -118,34 +118,29 @@ public class RecommendController {
             Integer timerange = period.getDays();
             Map map = weatherService.getWeatherByCityName(cityNameWeather);
             if (map == null) continue;
-            String dailyCases = (String) ((Map)((List)((Map)((List) map.get("list")).get(timerange)).get("weather")).get(0)).get("description");
+            String weathercondition = (String) ((Map)((List)((Map)((List) map.get("list")).get(timerange)).get("weather")).get(0)).get("main");
+            String weatherdescription = (String) ((Map)((List)((Map)((List) map.get("list")).get(timerange)).get("weather")).get(0)).get("description");
             Integer weatherScores ;
-            switch (dailyCases){
-                case "clear sky":
+            switch (weathercondition){
+                case "Clear":
                     weatherHash.put(cityName,10.0);
                     break;
-                case "few clouds":
-                    weatherHash.put(cityName,9.0);
+                case "Clouds":
+                    weatherHash.put(cityName,8.0);
                     break;
-                case "scattered clouds":
-                    weatherHash.put(cityName,7.0);
-                    break;
-                case "broken clouds":
-                    weatherHash.put(cityName,5.0);
-                    break;
-                case "shower rain":
+                case "Drizzle":
                     weatherHash.put(cityName,4.0);
                     break;
-                case "rain":
+                case "Rain":
                     weatherHash.put(cityName,2.0);
                     break;
-                case "thunderstorm":
+                case "Thunderstorm":
                     weatherHash.put(cityName,1.0);
                     break;
-                case "snow":
+                case "Snow":
                     weatherHash.put(cityName,3.0);
                     break;
-                case "mist":
+                case "Mist":
                     weatherHash.put(cityName,2.0);
                     break;
                 default:
