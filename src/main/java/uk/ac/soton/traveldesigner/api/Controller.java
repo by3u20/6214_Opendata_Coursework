@@ -65,9 +65,9 @@ public class Controller {
       }
     });
 
-
     for (int i = 0; i < 5; i++) {
-      result.addDestination(new Destination(i+1, list.get(i).getKey(), "+0", "Sunny", "Traval", "Shopping"));
+      String cityName = list.get(i).getKey();
+      result.addDestination(new Destination(i+1, cityName, covidScore.get(cityName).toString(), weatherScore.get(cityName).toString(), travelScore.get(cityName).toString(), shoppingScore.get(cityName).toString()));
     }
 
     return result;

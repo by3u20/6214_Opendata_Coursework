@@ -24,9 +24,9 @@ const destlist = {
 
         <div class="row fs-5">
           <div class="col-12 col-xl-1"><b>Rank</b></div>
-          <div class="col-12 col-xl-3"><b>Name</b></div>
+          <div class="col-12 col-xl-3"><b>Destination</b></div>
           <div class="col-12 col-xl-2"><b>COVID-19 Index</b></div>
-          <div class="col-12 col-xl-2"><b>Weather</b></div>
+          <div class="col-12 col-xl-2"><b>Weather Index</b></div>
           <div class="col-12 col-xl-2"><b>Travel Index</b></div>
           <div class="col-12 col-xl-2"><b>Shopping Index</b></div>
         </div>
