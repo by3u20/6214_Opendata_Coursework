@@ -45,24 +45,17 @@ public class Controller {
     Map<String, Double> shoppingScore = recommendController.getShoppingScore();
     Map<String, Double> finalScore = weatherScore;
 
-    if (choiceCovid19==null){
-    }
-    else{
+    if (choiceCovid19 != null) {
       covidScore.forEach((key,value) -> finalScore.merge(key,value,Double::sum));
     }
 
-    if (choiceTravel==null){
-    }
-    else{
+    if (choiceTravel != null){
       travelScore.forEach((key,value) -> finalScore.merge(key,value,Double::sum));
     }
 
-    if (choiceShopping==null){
-    }
-    else{
+    if (choiceShopping != null){
       shoppingScore.forEach((key,value) -> finalScore.merge(key,value,Double::sum));
     }
-
 
     List<Map.Entry<String, Double>> list = new ArrayList<Map.Entry<String, Double>>(finalScore.entrySet());
     Collections.sort(list, new Comparator<Map.Entry<String, Double>>() {
